@@ -38,7 +38,7 @@ const BlogForm = ({refBlog}) => {
             return null
         }
         refBlog()
-        dispatch(createBlog(post))
+        await dispatch(createBlog(post))
         dispatch(newNoti(`new blog post ${post.title }is created.`))
         
         setTitle('')

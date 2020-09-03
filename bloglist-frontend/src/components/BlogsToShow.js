@@ -2,7 +2,7 @@ import React from 'react'
 import Blog from './Blog'
 import {useSelector} from 'react-redux'
 
-const BlogsToShow = ({ username, handleDelete}) => {
+const BlogsToShow = ({ username}) => {
     const blogs = useSelector(state => state.blogs)
     let sortedBlogsToShow = blogs.sort(function (a, b) {
         return b.likes - a.likes
@@ -19,7 +19,7 @@ const BlogsToShow = ({ username, handleDelete}) => {
                 <Blog 
                 key={blog.id} 
                 blog={blog} 
-                deletePost={() => handleDelete(blog.id, blog)}
+                
                  />
                 )
             }

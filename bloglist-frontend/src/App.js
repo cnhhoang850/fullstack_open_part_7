@@ -28,6 +28,8 @@ const App = () => {
     }
   }, [])
 
+  console.log(user)
+
   const login = async (username, password) => {
     try{
       const user = await loginService.login({
@@ -42,16 +44,6 @@ const App = () => {
       setUser(user)
     } catch (exception) {
       dispatch(newNoti('usernam or password is incorrect'))
-    }
-  }
-
-  const handleDelete = async (id, blog) => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      await blogService.remove(id)
-
-      dispatch(newNoti('post deleted'))
-
-      blogService.getAll().then(blogs => setBlogs( blogs ))
     }
   }
 
@@ -90,7 +82,6 @@ const App = () => {
   <div>
   <BlogsToShow 
     username={user.username}   
-    handleDelete={handleDelete} 
   />
   </div>
   </>

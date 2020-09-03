@@ -5,6 +5,7 @@ import {newNoti} from '../reducers/notiReducer'
 import {useDispatch} from 'react-redux'
 
 const Blog = ({ blog }) => {
+  console.log(blog)
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
@@ -17,14 +18,14 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   }
 
-  const likePost = (blog) => {
-    dispatch(likeBlog(blog))
+  const likePost = async () => {
+    await dispatch(likeBlog(blog))
     dispatch(newNoti(`${blog.title} liked`))
   }
 
-  const deletePost = id => {
-    dispatch(newNoti(`${blog.title} deleted`))
-    dispatch(deleteBlog(id))
+  const deletePost = async () => {
+    await dispatch(newNoti(`${blog.title} deleted`))
+    dispatch(deleteBlog(blog.id))
   }
 
   const toggleVisibility = () => {
@@ -55,7 +56,7 @@ const Blog = ({ blog }) => {
     <div className="author"> 
     {blog.author}
     </div>
-  <button onClick={() => deletePost(blog.id)}>delete</button>
+  <button onClick={deletePost}>delete</button>
   </div>
     )
   }
