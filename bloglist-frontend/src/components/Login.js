@@ -1,14 +1,17 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
+import {login} from '../reducers/userReducer'
+import {useDispatch} from 'react-redux'
 
-const Login = ({login}) => {
+const Login = () => {
+    const dispatch = useDispatch()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault()
 
-        login(username, password)
+        dispatch(login(username, password))
 
         setUsername('')
         setPassword('')

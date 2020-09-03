@@ -5,10 +5,8 @@ import {newNoti} from '../reducers/notiReducer'
 import {useDispatch} from 'react-redux'
 
 const Blog = ({ blog }) => {
-  console.log(blog)
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
-  const [likes, setLikes] = useState(blog.likes)
 
   const blogStyle = {
     paddingTop: 10,

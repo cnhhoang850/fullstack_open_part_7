@@ -1,4 +1,3 @@
-let timeoutID = false
 const notiReducer = (state = '', action) => {
     switch(action.type) {
         case 'NEW_NOTI': {
@@ -6,7 +5,6 @@ const notiReducer = (state = '', action) => {
             return `${message}`
         }
         case 'CLEAR_NOTI' : {
-            timeoutID = false
             return ''
         }
         default: 
