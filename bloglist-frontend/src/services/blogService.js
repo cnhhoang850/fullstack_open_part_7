@@ -44,4 +44,9 @@ const find = async (id) => {
   return response.data
 }
 
-export default { getAll, setToken, create, remove, update, find }
+const updateComments = async (id, comment) => {
+  const response = await axios.put(baseUrl + '/' + id + '/comments', comment)
+  return response.data
+}
+
+export default { getAll, setToken, create, remove, update, find, updateComments }

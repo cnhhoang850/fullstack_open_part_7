@@ -13,6 +13,7 @@ import {logout, initializeUser} from './reducers/userReducer'
 import {initializeProfile} from './reducers/profileReducer'
 import {newNoti} from './reducers/notiReducer'
 import {likeBlog} from './reducers/blogReducer'
+import {useField} from './index'
 
 
 import {
@@ -75,6 +76,7 @@ const UserView = ({id}) => {
 const BlogView = ({id}) => {
   const dispatch = useDispatch()
   const bloglike = useSelector(state => state.blogs)
+  const comment = useField('text')
   const [isLoading, setLoading] = useState(true);
   const [blog, setBlog] = useState([]);
   useEffect(() => {
@@ -91,6 +93,12 @@ const BlogView = ({id}) => {
     dispatch(newNoti(`${blog.title} liked`))
   }
 
+  const handleComment = async (id) => {
+    const commented = {comment: comment.value}
+    blogService.updateComments(id, commented)
+    dispatch(newNoti(`${blog.title} commented`))
+  }
+
   if (isLoading) {
     return (
       <></>
@@ -102,6 +110,19 @@ const BlogView = ({id}) => {
       <a href={blog.url}>{blog.url}</a>
       <p>{blog.likes} likes</p><button onClick={likePost}>like</button>
       <p>added by {blog.author}</p>
+      <div>
+        <h3>comments</h3>
+        <form onSubmit={() => handleComment(id)}>
+          <input {...comment} reset="placeholder" />
+          <button type="submit">comment</button>
+        </form> 
+        <ul>
+          {blog.comments 
+          ? blog.comments.map(comment => <li>{comment}</li>)
+          : <li>no comments yet</li>
+          }
+        </ul>
+      </div>
     </div>
   )
 }
