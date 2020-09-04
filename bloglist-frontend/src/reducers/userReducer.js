@@ -50,7 +50,6 @@ export const logout = () => {
 export const initializeUser = () => {
     return async dispatch => {
         const loggedUserJSON =  window.localStorage.getItem('loggedBlogappUser')
-        console.log(loggedUserJSON)
         let user
         if (loggedUserJSON) {
             user = JSON.parse(loggedUserJSON)

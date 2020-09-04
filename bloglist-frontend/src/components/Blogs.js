@@ -2,20 +2,21 @@ import React, {useState, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {createBlog} from '../reducers/blogReducer'
 import {newNoti} from '../reducers/notiReducer'
+import {useField} from '../index'
 
 const BlogForm = ({refBlog}) => {
     const dispatch = useDispatch()
     const blogs = useSelector(state => state.blogs)
-    const [title, setTitle] = useState('')
-    const [author, setAuthor] = useState('')
-    const [url, setUrl] = useState('')
+    const title = useField('text')
+    const author = useField('text')
+    const url = useField('text')
 
     const handleCreate = async (event) => {
         event.preventDefault()
         const post = {
-            title: title,
-            author: author,
-            url: url
+            title: title.value,
+            author: author.value,
+            url: url.value
         }
         
         if (!post.title || ! post.url) {
@@ -28,22 +29,22 @@ const BlogForm = ({refBlog}) => {
       
         if (uniqeTitle.includes(post.title)) {
             dispatch(newNoti('title used, please use another'))
-            setTitle('')
-            setAuthor('')
+            title.reset()
+            author.reset()
             return null
         } else if (uniqeUrl.includes(post.url)) {
             dispatch(newNoti('URL used, please use another'))
-            setAuthor('')
-            setUrl('')
+            author.reset()
+            url.reset()
             return null
         }
         refBlog()
         await dispatch(createBlog(post))
         dispatch(newNoti(`new blog post ${post.title }is created.`))
         
-        setTitle('')
-        setAuthor('')
-        setUrl('')
+        title.reset()
+        author.reset()
+        url.reset()
     }
     return (
     <div >
@@ -53,30 +54,24 @@ const BlogForm = ({refBlog}) => {
             title: 
             <input
             className="title"
-            type = "text"
-            value = {title}
-            name = "Title"
-            onChange = {({target}) => {setTitle(target.value)}}
+            {...title}
+            reset="placeholder"
             />
         </div>
         <div>
             author: 
             <input
             className="author"
-            type = "text"
-            value = {author}
-            name = "Author"
-            onChange = {({target}) => {setAuthor(target.value)}}
+            {...author}
+            reset="placeholder"
             />
         </div>
         <div>
             url: 
             <input
             className="url"
-            type = "text"
-            value = {url}
-            name = "Url"
-            onChange = {({target}) => {setUrl(target.value)}}
+            {...url}
+            reset="placeholder"
             />
         </div>
         <button type = "submit" id="create-button">create</button>
