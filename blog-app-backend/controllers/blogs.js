@@ -13,6 +13,32 @@ blogsRouter.get('/',  async (request, response) => {
   response.json(posts.map (post => post.toJSON()))
 })
 
+blogsRouter.get('/:id', async (request, response) => {
+  const blog = await Blog.findById(request.params.id)
+  console.log(blog)
+  response.json(blog.toJSON())
+})
+
+blogsRouter.put('/:id/comments', async (request, response) => {
+  const commented = request.body
+
+  const oldBlog = await Blog.findById(request.params.id)
+
+  const newBlog = {
+    title:  oldBlog.title,
+    author: oldBlog.author,
+    url: oldBlog.url,
+    likes: oldBlog.likes,
+    comments: oldBlog.comments 
+      ? oldBlog.comments.concat(commented.comment)
+      : [commented.comment]
+  }
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, {new: true})
+
+  response.json(updatedBlog.toJSON())
+})
+
 blogsRouter.post('/'
   , eJwt({ secret: process.env.SECRET,  algorithms: ['HS256'] })
   , async (request, response) => {
@@ -37,7 +63,8 @@ blogsRouter.post('/'
     author: body.author,
     url: body.url,
     likes: body.likes === undefined? 0 : body.likes,
-    user: user._id
+    user: user._id,
+    comments: body.comments === undefined ? [] : body.comments
   })
    
   const savedBlog = await blog.save()
