@@ -1,10 +1,7 @@
 import userService from '../services/userService'
-import {newNoti} from './notiReducer'
-
 const profilesReducer = (state = [], action) => {
     switch(action.type) {
         case 'INIT_PRO':
-            console.log(action.data)
             return action.data
         default:
             return state
@@ -13,7 +10,7 @@ const profilesReducer = (state = [], action) => {
 
 export const initializeProfile = (profiles) => {
     return async dispatch => {
-        console.log(profiles)
+        const profiles = await userService.getAll()
         dispatch({
             type: 'INIT_PRO',
             data: profiles

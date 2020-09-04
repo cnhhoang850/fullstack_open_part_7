@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {createBlog} from '../reducers/blogReducer'
 import {newNoti} from '../reducers/notiReducer'

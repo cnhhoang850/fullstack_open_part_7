@@ -7,10 +7,10 @@ import userReducer from './reducers/userReducer'
 import profilesReducer from './reducers/profileReducer'
 
 const reducer = combineReducers({
+    profiles: profilesReducer,
     notification: notiReducer,
     blogs: blogReducer,
-    user: userReducer,
-    profiles: profilesReducer
+    user: userReducer
 })
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))

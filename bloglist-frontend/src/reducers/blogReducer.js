@@ -21,8 +21,9 @@ const blogReducer = (state = [], action) => {
     }
 }
 
-export const initializeBlog = (blogs) => {
+export const initializeBlog = () => {
     return async dispatch => {
+        const blogs = await blogService.getAll()
         dispatch({
             type: 'INIT_BLOG',
             data: blogs

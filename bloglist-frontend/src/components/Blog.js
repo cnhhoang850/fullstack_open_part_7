@@ -3,6 +3,7 @@ import {likeBlog} from '../reducers/blogReducer'
 import {deleteBlog} from '../reducers/blogReducer'
 import {newNoti} from '../reducers/notiReducer'
 import {useDispatch} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
@@ -33,7 +34,9 @@ const Blog = ({ blog }) => {
   return (
   <div style={blogStyle} className='blog'>
     <div>
+    <Link to={`/blogs/${blog.id}`}>
       <b>{blog.title} {blog.author}</b>
+    </Link>
       <button onClick={toggleVisibility} className="view">
       view
       </button>

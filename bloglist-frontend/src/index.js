@@ -8,6 +8,7 @@ import {initializeBlog} from './reducers/blogReducer'
 import {BrowserRouter as Router} from 'react-router-dom'
 import userService from './services/userService'
 import { initializeProfile } from './reducers/profileReducer'
+import {initializeUser} from './reducers/userReducer'
 
 export const useField = (type) => {
   const [value, setValue] = useState('')
@@ -28,16 +29,9 @@ export const useField = (type) => {
   }
 }
 
-blogService.getAll().then(blogs => 
-    store.dispatch(initializeBlog(blogs))
-    )
-
-userService.getAll().then(profiles => {
-    console.log(profiles)
-    store.dispatch(initializeProfile(profiles))
-    }
-  )
-
+store.dispatch(initializeUser())
+store.dispatch(initializeProfile())
+store.dispatch(initializeBlog())
 
 ReactDOM.render(
     <Router>
